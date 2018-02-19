@@ -5,14 +5,29 @@ using UnityEngine;
 public class Controller : MonoBehaviour {
 
 	public GameObject plane;
-	public GameObject transportType;
+	public GameObject transportType1;
+	public GameObject transportType2;
+	public GameObject transportType3;
+	public GameObject transportType4;
+	public GameObject transportType5;
+	public GameObject transportType6;
+	List<GameObject> transportTypeList;
+
+	public GameObject pointType;
 
 	public Transport current;
 	public Vector3 lastPoint;
+	public float pointRadius = 2.0f;
 
 	// Use this for initialization
 	void Start () {
-		
+		transportTypeList = new List<GameObject>();
+		transportTypeList.Add(transportType1);
+		transportTypeList.Add(transportType2);
+		transportTypeList.Add(transportType3);
+		transportTypeList.Add(transportType4);
+		transportTypeList.Add(transportType5);
+		transportTypeList.Add(transportType6);
 	}
 	
 	// Update is called once per frame
@@ -21,14 +36,18 @@ public class Controller : MonoBehaviour {
 		if (Input.GetMouseButton(0))
 		{
 			RaycastHit hit;
-			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && hit.transform.name == plane.name)
 			{
-				Debug.Log("Mouse down. Raycast: " +  hit.point);
+				// Debug.Log("Mouse down. Raycast: " +  hit.point);
 				if (current == null) {
-					lastPoint = hit.point;
 					current = newTransport(hit.point);
+					current.QueuePoint(hit.point);
 				} else {
-					
+					if(Vector3.Distance(hit.point, lastPoint) >= pointRadius) {
+						Instantiate(pointType, hit.point, Quaternion.Euler(-90, 0, 0));
+						lastPoint = hit.point;
+						current.QueuePoint(hit.point);
+					}
 				}
 			}
 		}
@@ -42,7 +61,9 @@ public class Controller : MonoBehaviour {
 	private Transport newTransport(Vector3 point) {
 		Debug.Log("New Transport");
 		lastPoint = point;
-		GameObject newTransport =  Instantiate (transportType, Vector3.one, Quaternion.Euler (Vector3.zero));
+		Instantiate(pointType, point, Quaternion.Euler(-90, 0, 0));
+		GameObject transportType = transportTypeList[Random.Range(0, transportTypeList.Count - 1)];
+		GameObject newTransport =  Instantiate(transportType, new Vector3(0, -10, 0), Quaternion.Euler (Vector3.one));
 		return newTransport.GetComponent<Transport>();
 	}
 }
