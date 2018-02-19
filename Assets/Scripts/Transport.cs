@@ -23,22 +23,21 @@ public class Transport : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (active) {
+			targetPoint.y = transform.position.y;
 			// rotate towards the target
 			transform.forward = Vector3.RotateTowards(transform.forward, targetPoint - transform.position, speed*Time.deltaTime, 0.0f);
 
 			// move towards the target
-			transform.position = Vector3.MoveTowards(transform.position, targetPoint,   speed*Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, targetPoint, speed*Time.deltaTime);
 			
 			if(transform.localPosition == targetPoint) {
 				DequeuePoint();
 			} 
 		}
-		
 	}
 
 	// Add new point to trajectory 
 	public void QueuePoint(Vector3 point) {
-		point.y = 0.5f;
 		Debug.Log("Point Queued: " +  point);
 		points.Enqueue(point);
 
@@ -79,6 +78,11 @@ public class Transport : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision)
 	{
-		Debug.Log("collision! " + gameObject);
+		Debug.Log("collision: " + gameObject.name + " hit " + collision.collider.name);
+		if(collision.collider.name != "Plane") {
+			active = false;
+			Rigidbody rigid = GetComponent<Rigidbody>();
+			rigid.velocity = rigid.velocity.normalized * 20;
+		} 
 	}
 }
