@@ -13,6 +13,7 @@ public class Transport : MonoBehaviour {
 	private Vector3 targetPoint;
 
 	private float speed;
+	private float collisionVelocity = 20.0f;
 
 	// Use this for initialization
 	void Awake () {
@@ -82,7 +83,7 @@ public class Transport : MonoBehaviour {
 		if(collision.collider.name != "Plane") {
 			active = false;
 			Rigidbody rigid = GetComponent<Rigidbody>();
-			rigid.velocity = rigid.velocity.normalized * 20;
+			rigid.velocity = rigid.velocity.normalized * collisionVelocity;
 		} 
 	}
 }

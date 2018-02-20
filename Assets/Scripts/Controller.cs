@@ -16,9 +16,9 @@ public class Controller : MonoBehaviour {
 
 	public GameObject pointType;
 
-	public Transport current;
-	public Vector3 lastPoint;
-	public float pointRadius = 2.0f;
+	private Transport current;
+	private Vector3 lastPoint;
+	private float pointRadius = 0.5f;
 
 	// Use this for initialization
 	void Start () {
