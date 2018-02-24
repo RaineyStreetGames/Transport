@@ -14,6 +14,7 @@ public class Transport : MonoBehaviour {
 
 	private float speed;
 	private float collisionVelocity = 20.0f;
+	private float explosiveVelocity = 500.0f;
 
 	// Use this for initialization
 	void Awake () {
@@ -83,7 +84,8 @@ public class Transport : MonoBehaviour {
 		if(collision.collider.name != "Plane") {
 			active = false;
 			Rigidbody rigid = GetComponent<Rigidbody>();
-			rigid.velocity = rigid.velocity.normalized * collisionVelocity;
+			rigid.velocity = collisionVelocity * rigid.velocity.normalized;
+			rigid.AddExplosionForce(explosiveVelocity, collision.transform.position, explosiveVelocity);
 		} 
 	}
 }
