@@ -12,6 +12,14 @@ public class Controller : MonoBehaviour {
 	public GameObject transportType5;
 	public GameObject transportType6;
 	public GameObject transportType7;
+	public GameObject transportType8;
+	public GameObject transportType9;
+	public GameObject transportType10;
+	public GameObject transportType11;
+	public GameObject transportType12;
+	public GameObject transportType13;
+	public GameObject transportType14;
+	public GameObject transportType15;
 	List<GameObject> transportTypeList;
 
 	public GameObject pointType;
@@ -30,6 +38,14 @@ public class Controller : MonoBehaviour {
 		transportTypeList.Add(transportType5);
 		transportTypeList.Add(transportType6);
 		transportTypeList.Add(transportType7);
+		transportTypeList.Add(transportType8);
+		transportTypeList.Add(transportType9);
+		transportTypeList.Add(transportType10);
+		transportTypeList.Add(transportType11);
+		transportTypeList.Add(transportType12);
+		transportTypeList.Add(transportType13);
+		transportTypeList.Add(transportType14);
+		transportTypeList.Add(transportType15);
 	}
 	
 	// Update is called once per frame
@@ -65,7 +81,7 @@ public class Controller : MonoBehaviour {
 		lastPoint = point;
 		Instantiate(pointType, point, Quaternion.Euler(-90, 0, 0));
 		GameObject transportType = transportTypeList[Random.Range(0, transportTypeList.Count)];
-		GameObject newTransport =  Instantiate(transportType, new Vector3(0, -10, 0), Quaternion.Euler (Vector3.one));
+		GameObject newTransport =  Instantiate(transportType, new Vector3(0, -100, 0), Quaternion.Euler (Vector3.one));
 		return newTransport.GetComponent<Transport>();
 	}
 }

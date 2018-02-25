@@ -8,6 +8,7 @@ public class Transport : MonoBehaviour {
 	public Queue<Vector3> points;
 
 	private bool active;
+	private bool expired;
 	private bool deadOnArrival;
 	private Vector3 lastPoint;
 	private Vector3 targetPoint;
@@ -15,6 +16,7 @@ public class Transport : MonoBehaviour {
 	private float speed;
 	private float collisionVelocity = 20.0f;
 	private float explosiveVelocity = 500.0f;
+	private float expirtationPeriod = 10.0f;
 
 	// Use this for initialization
 	void Awake () {
@@ -35,6 +37,12 @@ public class Transport : MonoBehaviour {
 			if(transform.localPosition == targetPoint) {
 				DequeuePoint();
 			} 
+		}
+		if (expired) {
+			expirtationPeriod -= Time.deltaTime;
+			if ( expirtationPeriod < 0 ) {
+				Destroy(gameObject);
+			}
 		}
 	}
 
@@ -83,9 +91,11 @@ public class Transport : MonoBehaviour {
 		Debug.Log("collision: " + gameObject.name + " hit " + collision.collider.name);
 		if(collision.collider.name != "Plane") {
 			active = false;
+			expired = true;
 			Rigidbody rigid = GetComponent<Rigidbody>();
 			rigid.velocity = collisionVelocity * rigid.velocity.normalized;
 			rigid.AddExplosionForce(explosiveVelocity, collision.transform.position, explosiveVelocity);
+			rigid.useGravity = true;
 		} 
 	}
 }
