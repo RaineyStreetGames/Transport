@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
-	public GameObject plane;
+	public GameObject terrain;
 	public GameObject transportType1;
 	public GameObject transportType2;
 	public GameObject transportType3;
@@ -28,34 +28,40 @@ public class Controller : MonoBehaviour {
 	private Vector3 lastPoint;
 	private float pointRadius = 0.5f;
 
+	public static Object smallExplosion;
+	public static Object largeExplosion;
+	public static Object sparks;
+
 	// Use this for initialization
 	void Start () {
 		transportTypeList = new List<GameObject>();
 		transportTypeList.Add(transportType1);
-		transportTypeList.Add(transportType2);
-		transportTypeList.Add(transportType3);
+		// transportTypeList.Add(transportType2);
+		// transportTypeList.Add(transportType3);
 		transportTypeList.Add(transportType4);
-		transportTypeList.Add(transportType5);
-		transportTypeList.Add(transportType6);
-		transportTypeList.Add(transportType7);
-		transportTypeList.Add(transportType8);
-		transportTypeList.Add(transportType9);
-		transportTypeList.Add(transportType10);
-		transportTypeList.Add(transportType11);
-		transportTypeList.Add(transportType12);
-		transportTypeList.Add(transportType13);
-		transportTypeList.Add(transportType14);
-		transportTypeList.Add(transportType15);
+		// transportTypeList.Add(transportType5);
+		// transportTypeList.Add(transportType6);
+		// transportTypeList.Add(transportType7);
+		// transportTypeList.Add(transportType8);
+		// transportTypeList.Add(transportType9);
+		// transportTypeList.Add(transportType10);
+		// transportTypeList.Add(transportType11);
+		// transportTypeList.Add(transportType12);
+		// transportTypeList.Add(transportType13);
+		// transportTypeList.Add(transportType14);
+		// transportTypeList.Add(transportType15);
+
+		smallExplosion = Resources.Load("SmallExplosion");
+		largeExplosion = Resources.Load("LargeExplosion");
+		sparks = Resources.Load("Sparks");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Mouse Drag Event
-		if (Input.GetMouseButton(0))
-		{
+		if (Input.GetMouseButton(0)) {
 			RaycastHit hit;
-			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && hit.transform.name == plane.name)
-			{
+			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && hit.transform.name == terrain.name) {
 				// Debug.Log("Mouse down. Raycast: " +  hit.point);
 				if (current == null) {
 					current = newTransport(hit.point);
