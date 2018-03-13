@@ -36,20 +36,20 @@ public class Controller : MonoBehaviour {
 	void Start () {
 		transportTypeList = new List<GameObject>();
 		transportTypeList.Add(transportType1);
-		// transportTypeList.Add(transportType2);
-		// transportTypeList.Add(transportType3);
+		transportTypeList.Add(transportType2);
+		transportTypeList.Add(transportType3);
 		transportTypeList.Add(transportType4);
-		// transportTypeList.Add(transportType5);
-		// transportTypeList.Add(transportType6);
-		// transportTypeList.Add(transportType7);
-		// transportTypeList.Add(transportType8);
-		// transportTypeList.Add(transportType9);
-		// transportTypeList.Add(transportType10);
-		// transportTypeList.Add(transportType11);
-		// transportTypeList.Add(transportType12);
-		// transportTypeList.Add(transportType13);
-		// transportTypeList.Add(transportType14);
-		// transportTypeList.Add(transportType15);
+		transportTypeList.Add(transportType5);
+		transportTypeList.Add(transportType6);
+		transportTypeList.Add(transportType7);
+		transportTypeList.Add(transportType8);
+		transportTypeList.Add(transportType9);
+		transportTypeList.Add(transportType10);
+		transportTypeList.Add(transportType11);
+		transportTypeList.Add(transportType12);
+		transportTypeList.Add(transportType13);
+		transportTypeList.Add(transportType14);
+		transportTypeList.Add(transportType15);
 
 		smallExplosion = Resources.Load("SmallExplosion");
 		largeExplosion = Resources.Load("LargeExplosion");
