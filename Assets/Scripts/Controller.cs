@@ -22,8 +22,6 @@ public class Controller : MonoBehaviour {
 	public GameObject transportType15;
 	List<GameObject> transportTypeList;
 
-	public GameObject pointType;
-
 	private Transport current;
 	private Vector3 lastPoint;
 	private float pointRadius = 0.5f;
@@ -31,6 +29,7 @@ public class Controller : MonoBehaviour {
 	public static Object smallExplosion;
 	public static Object largeExplosion;
 	public static Object sparks;
+	public static Object pointType;
 
 	// Use this for initialization
 	void Start () {
@@ -54,6 +53,7 @@ public class Controller : MonoBehaviour {
 		smallExplosion = Resources.Load("SmallExplosion");
 		largeExplosion = Resources.Load("LargeExplosion");
 		sparks = Resources.Load("Sparks");
+		pointType = Resources.Load("Point");
 	}
 	
 	// Update is called once per frame

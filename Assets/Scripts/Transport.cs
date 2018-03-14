@@ -19,7 +19,7 @@ public class Transport : MonoBehaviour {
 	private float expirtationPeriod = 10.0f;
 
 	private Rigidbody rigid;
-	private AudioSource audioSource;
+	private AudioSource[] audioSources;
 
 
 	// Use this for initialization
@@ -28,8 +28,10 @@ public class Transport : MonoBehaviour {
 		speed = Random.Range(20, 30);
 		rigid = GetComponent<Rigidbody>();
 		rigid.isKinematic = true;
-		audioSource = GetComponent<AudioSource>();
-		StartCoroutine (AudioFade.In (audioSource, 2.0f));
+		audioSources = GetComponents<AudioSource>();
+		foreach (AudioSource audioSource in audioSources) {
+			StartCoroutine (AudioFade.In (audioSource, 2.0f));
+		}
 	}
 	
 	// Update is called once per frame
@@ -55,7 +57,9 @@ public class Transport : MonoBehaviour {
 	}
 
 	void Remove() {
-		StartCoroutine (AudioFade.Out (audioSource, 1.5f));
+		foreach (AudioSource audioSource in audioSources) {
+			StartCoroutine (AudioFade.VolumeOut (audioSource, 1.5f));
+		}
 		Destroy(gameObject, 1.5f);
 	}
 
@@ -111,6 +115,9 @@ public class Transport : MonoBehaviour {
 			rigid.velocity = collisionVelocity * rigid.velocity.normalized;
 			rigid.AddExplosionForce(explosiveVelocity, collision.transform.position, explosiveVelocity);
 			rigid.useGravity = true;
+			foreach (AudioSource audioSource in audioSources) {
+				StartCoroutine (AudioFade.PitchOut (audioSource, 1.5f));
+			}
 		} 
 
 		if(expired == true) {
