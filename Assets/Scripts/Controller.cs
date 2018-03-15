@@ -31,6 +31,21 @@ public class Controller : MonoBehaviour {
 	public static Object sparks;
 	public static Object pointType;
 
+	public AudioClip crash1;
+	public AudioClip crash2;
+	public AudioClip crash3;
+	public AudioClip crash4;
+	public static List<AudioClip> crashList;
+
+
+	public AudioClip honk1;
+	public AudioClip honk2;
+	public AudioClip honk3;
+	public AudioClip honk4;
+	public AudioClip honk5;
+	public AudioClip honk6;
+	public static List<AudioClip> honkList;
+	
 	// Use this for initialization
 	void Start () {
 		transportTypeList = new List<GameObject>();
@@ -49,6 +64,20 @@ public class Controller : MonoBehaviour {
 		transportTypeList.Add(transportType13);
 		transportTypeList.Add(transportType14);
 		transportTypeList.Add(transportType15);
+
+		crashList = new List<AudioClip>();
+		crashList.Add(crash1);
+		crashList.Add(crash2);
+		crashList.Add(crash3);
+		crashList.Add(crash4);
+
+		honkList = new List<AudioClip>();
+		honkList.Add(honk1);
+		honkList.Add(honk2);
+		honkList.Add(honk3);
+		honkList.Add(honk4);
+		honkList.Add(honk5);
+		honkList.Add(honk6);
 
 		smallExplosion = Resources.Load("SmallExplosion");
 		largeExplosion = Resources.Load("LargeExplosion");
@@ -83,7 +112,7 @@ public class Controller : MonoBehaviour {
 	}
 
 	private Transport newTransport(Vector3 point) {
-		Debug.Log("New Transport");
+		// Debug.Log("New Transport");
 		lastPoint = point;
 		Instantiate(pointType, point, Quaternion.Euler(-90, 0, 0));
 		GameObject transportType = transportTypeList[Random.Range(0, transportTypeList.Count)];
