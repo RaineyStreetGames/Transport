@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour {
 
-	public GameObject terrain;
 	public GameObject transportType1;
 	public GameObject transportType2;
 	public GameObject transportType3;
@@ -90,7 +89,7 @@ public class Controller : MonoBehaviour {
 		// Mouse Drag Event
 		if (Input.GetMouseButton(0)) {
 			RaycastHit hit;
-			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && hit.transform.name == terrain.name) {
+			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit) && hit.transform.tag == "Terrain") {
 				// Debug.Log("Mouse down. Raycast: " +  hit.point);
 				if (current == null) {
 					current = newTransport(hit.point);

@@ -68,7 +68,7 @@ public class Transport : MonoBehaviour {
 
 			if(tag != "Plane") {
 				IEnumerable<Collider> honkObjects = Physics.OverlapSphere(transform.position, honkRadius)
-					.Where(c => c.name != "Terrain" && c.tag != "Plane" && c.transform.position != transform.position && !c.GetComponent<Transport>().expired);
+					.Where(c => c.tag != "Terrain" && c.tag != "Plane" && c.transform.position != transform.position && !c.GetComponent<Transport>().expired);
 				if (honkObjects.Count() > 0) {
 					PlaySource(honkSource, 0.6f);
 				}
@@ -98,17 +98,19 @@ public class Transport : MonoBehaviour {
 
 	// Add new point to trajectory 
 	public void QueuePoint(Vector3 point) {
-		// Debug.Log("Point Queued: " +  point);
-		points.Enqueue(point);
+		if (!expired || deadOnArrival) {
+			// Debug.Log("Point Queued: " +  point);
+			points.Enqueue(point);
 
-		// If we're not active and have enough points to start a route set up the transport
-		if(!active && points.Count >= 2) {
-			Vector3 startPoint = getOffScreenPoint(points.ElementAt(0) - points.ElementAt(1));
-			// Debug.Log("Activating Transport. Starting Point: " +  startPoint);
-			transform.localPosition = new Vector3(startPoint.x, 0.1f, startPoint.z);
-			rigid.isKinematic = false;
-			active = true;
-			DequeuePoint();
+			// If we're not active and have enough points to start a route set up the transport
+			if(!active && points.Count >= 2) {
+				Vector3 startPoint = getOffScreenPoint(points.ElementAt(0) - points.ElementAt(1));
+				// Debug.Log("Activating Transport. Starting Point: " +  startPoint);
+				transform.localPosition = new Vector3(startPoint.x, 0.1f, startPoint.z);
+				rigid.isKinematic = false;
+				active = true;
+				DequeuePoint();
+			}
 		}
 	}
  
@@ -140,7 +142,7 @@ public class Transport : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision){
 		Debug.Log("collision: " + gameObject.name + " hit " + collision.collider.name);
-		if(collision.collider.name != "Terrain") {
+		if(collision.collider.tag != "Terrain") {
 			active = false;
 			expired = true;
 			rigid.velocity = collisionVelocity * rigid.velocity.normalized;
@@ -157,7 +159,7 @@ public class Transport : MonoBehaviour {
 				if(collision.collider.tag == "Plane") {
 					Instantiate(Controller.largeExplosion, contact.point, Quaternion.Euler(-90, 0, 0));
 					PlaySource(crashSource, 0.5f);
-				} else if (collision.collider.name != "Terrain")  {
+				} else if (collision.collider.tag != "Terrain")  {
 					Instantiate(Controller.smallExplosion, contact.point, Quaternion.Euler(-90, 0, 0));
 					PlaySource(crashSource, 0.5f);
 				} else {
