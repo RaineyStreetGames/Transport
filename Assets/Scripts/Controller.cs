@@ -22,13 +22,14 @@ public class Controller : MonoBehaviour {
 	List<GameObject> transportTypeList;
 
 	private Transport current;
+	private GameObject currentPoint;
 	private Vector3 lastPoint;
 	private float pointRadius = 0.5f;
 
 	public static Object smallExplosion;
 	public static Object largeExplosion;
 	public static Object sparks;
-	public static Object pointType;
+	public static GameObject pointType;
 
 	public AudioClip crash1;
 	public AudioClip crash2;
@@ -81,7 +82,7 @@ public class Controller : MonoBehaviour {
 		smallExplosion = Resources.Load("SmallExplosion");
 		largeExplosion = Resources.Load("LargeExplosion");
 		sparks = Resources.Load("Sparks");
-		pointType = Resources.Load("Point");
+		pointType = Resources.Load<GameObject>("Drag");
 	}
 	
 	// Update is called once per frame
@@ -96,10 +97,15 @@ public class Controller : MonoBehaviour {
 					current.QueuePoint(hit.point);
 				} else {
 					if(Vector3.Distance(hit.point, lastPoint) >= pointRadius) {
-						Instantiate(pointType, hit.point, Quaternion.Euler(-90, 0, 0));
 						lastPoint = hit.point;
 						current.QueuePoint(hit.point);
 					}
+				}
+
+				if(currentPoint == null) {
+					currentPoint = Instantiate(pointType, hit.point, Quaternion.Euler(-90, 0, 0));
+				} else {
+					currentPoint.transform.position = hit.point;
 				}
 			}
 		}
@@ -107,13 +113,15 @@ public class Controller : MonoBehaviour {
 		// Mouse Up Event
 		if (Input.GetMouseButtonUp(0)) {
 			current = null;
+			var ps = currentPoint.GetComponent<ParticleSystem>().main;
+			ps.loop = false;
+			currentPoint = null;
 		}
 	}
 
 	private Transport newTransport(Vector3 point) {
 		// Debug.Log("New Transport");
 		lastPoint = point;
-		Instantiate(pointType, point, Quaternion.Euler(-90, 0, 0));
 		GameObject transportType = transportTypeList[Random.Range(0, transportTypeList.Count)];
 		GameObject newTransport =  Instantiate(transportType, new Vector3(0, -100, 0), Quaternion.Euler (Vector3.one));
 		return newTransport.GetComponent<Transport>();
