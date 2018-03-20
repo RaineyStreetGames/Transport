@@ -128,11 +128,12 @@ public class Transport : MonoBehaviour {
 
 	// Dequeue next target point
 	void DequeuePoint() {
-		if (points.Count >= 1) {
+		if (deadOnArrival) {
+			active = false;
+			Remove();
+		} else if (points.Count >= 1) {
 			lastPoint = targetPoint;
 			targetPoint = points.Dequeue();
-		} else if (deadOnArrival) {
-			Remove();
 		} else {
 			Vector3 targetDir = transform.localPosition - lastPoint;
 			targetPoint = targetDir * 100;
@@ -156,10 +157,10 @@ public class Transport : MonoBehaviour {
 
 		if(expired == true) {
 			foreach (ContactPoint contact in collision.contacts) {
-				if(collision.collider.tag == "Plane") {
+				if(collision.collider.tag == "Plane" && oneExplosion) {
 					Instantiate(Controller.largeExplosion, contact.point, Quaternion.Euler(-90, 0, 0));
 					PlaySource(crashSource, 0.5f);
-				} else if (collision.collider.tag != "Terrain")  {
+				} else if (collision.collider.tag != "Terrain" && oneExplosion)  {
 					Instantiate(Controller.smallExplosion, contact.point, Quaternion.Euler(-90, 0, 0));
 					PlaySource(crashSource, 0.5f);
 				} else {
