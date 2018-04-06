@@ -157,10 +157,10 @@ public class Transport : MonoBehaviour {
 
 		if(expired == true) {
 			foreach (ContactPoint contact in collision.contacts) {
-				if(collision.collider.tag == "Plane" && oneExplosion) {
+				if(collision.collider.tag == "Plane") {
 					Instantiate(Controller.largeExplosion, contact.point, Quaternion.Euler(-90, 0, 0));
 					PlaySource(crashSource, 0.5f);
-				} else if (collision.collider.tag != "Terrain" && oneExplosion)  {
+				} else if (collision.collider.tag != "Terrain")  {
 					Instantiate(Controller.smallExplosion, contact.point, Quaternion.Euler(-90, 0, 0));
 					PlaySource(crashSource, 0.5f);
 				} else {
