@@ -10,7 +10,6 @@ public class Controller : MonoBehaviour {
 	public GameObject transportType4;
 	public GameObject transportType5;
 	public GameObject transportType6;
-	public GameObject transportType7;
 	public GameObject transportType8;
 	public GameObject transportType9;
 	public GameObject transportType10;
@@ -55,7 +54,6 @@ public class Controller : MonoBehaviour {
 		transportTypeList.Add(transportType4);
 		transportTypeList.Add(transportType5);
 		transportTypeList.Add(transportType6);
-		transportTypeList.Add(transportType7);
 		transportTypeList.Add(transportType8);
 		transportTypeList.Add(transportType9);
 		transportTypeList.Add(transportType10);
