@@ -146,7 +146,7 @@ public class Transport : MonoBehaviour {
 		if(collision.collider.tag != "Terrain") {
 			active = false;
 			expired = true;
-			rigid.velocity = collisionVelocity * rigid.velocity.normalized;
+			rigid.linearVelocity = collisionVelocity * rigid.linearVelocity.normalized;
 			rigid.AddExplosionForce(explosiveVelocity, collision.transform.position, explosiveVelocity);
 			rigid.useGravity = true;
 			foreach (AudioSource audioSource in audioSources) {

@@ -53,5 +53,5 @@
     },
     "omnisharp.projectLoadTimeout": 120,
     "editor.codeLens": false,
-    "dotnet.defaultSolution": "Transport.sln"
+    "dotnet.defaultSolution": "Transport.slnx"
 }
